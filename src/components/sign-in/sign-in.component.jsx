@@ -1,11 +1,13 @@
 import React from 'react';
 
 import './sign-in.styles.scss';
-import { render } from '@testing-library/react';
+import FormInput from '../form-input/form-input.component';
+import CustomButton from '../custom-button/custom-button.component';
+import { auth, SignInWithGoogle } from '../../firebase/firebase.utils'
 
 class SignIn extends React.Component{
-    constructur(){
-        super()
+    constructor(props){
+        super(props)
 
         this.state = {
             email: '',
@@ -13,14 +15,18 @@ class SignIn extends React.Component{
         }
     }
     
-    handleSubmit = event => {
+    handleSubmit = async event => {
         event.preventDefault();
 
-        this.setState({ 
-            email: '', 
-            password: '' 
-        })
-    }
+        const { email, password } = this.state;
+
+        try{
+            await auth.signInWithEmailAndPassword(email, password);
+            this.setState({ email: '', password: '' });
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     handleChange = event => {
         const {name, value} = event.target;
@@ -38,23 +44,30 @@ class SignIn extends React.Component{
                 <span> Sign in with your email and password</span>
 
                 <form onSubmit={this.handleSubmit}>
-                    <input 
+                    <FormInput
+                        label="Email"
                         name="email"
                         type="email"
                         value={this.state.email}
+                        handleChange={this.handleChange}
                         required />
-                    <label>Email</label>
-                    <input
+                
+                    <FormInput
+                        label="Password"
                         name="password"
                         type="password"
                         value={this.state.password}
+                        handleChange={this.handleChange}
                         required />
-                    <label>Password</label>
+                    <div className='buttons'>
+                        <CustomButton type='submit'>SIGN IN</CustomButton>
+                        <CustomButton onClick={SignInWithGoogle} isGoogleSignIn>SIGN IN WITH GOOGLE</CustomButton>
+                    </div>
 
-                    <input type='submit' value='Submit Form'/>
                 </form>
             </div>
         )
     }
 }
 
+export default SignIn;
