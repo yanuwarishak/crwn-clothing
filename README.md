@@ -1,3 +1,4 @@
+## This is a self-learning project using React.js on developing fashion e-commerce application.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
