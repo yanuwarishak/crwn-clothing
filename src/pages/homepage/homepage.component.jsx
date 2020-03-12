@@ -1,15 +1,13 @@
 import React from 'react';
-import { Route } from "react-router-dom";
 
-import './homepage.styles.scss';
+import {HomePageDiv} from "./homepage.styles";
+
 import Directory from '../../components/directory/directory.component';
-import CollectionPage from "../collection/collection.component";
 
-const HomePage = ({match}) => (
-    <div className='homepage'>
+const HomePage = () => (
+    <HomePageDiv>
         <Directory/>
-        <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
-    </div>
+    </HomePageDiv>
 )
 
 export default HomePage;
